@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 안전보건교육 효과성 설문</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+    background: #F2F4F7;
+    color: #1A1D23;
+    min-height: 100vh;
+    padding: 2rem 1rem 4rem;
+  }
+
+  .page-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  /* Hero */
+  .hero {
+    background: #1A1D23;
+    border-radius: 16px;
+    padding: 2.5rem 2.5rem 2rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: #2ECC9A;
+    opacity: 0.12;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: #2ECC9A;
+    color: #0A3D28;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 100px;
+    margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #FFFFFF;
+    line-height: 1.35;
+    margin-bottom: 0.75rem;
+  }
+  .hero p {
+    font-size: 14px;
+    color: #8B8FA8;
+    line-height: 1.7;
+  }
+
+  /* Cards */
+  .card {
+    background: #FFFFFF;
+    border-radius: 14px;
+    padding: 2rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid #E4E7EF;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #2ECC9A;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: #1A1D23;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Star Rating */
+  .star-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 1.5rem;
+  }
+
+  .star-group input[type="radio"] { display: none; }
+
+  .star-group label {
+    font-size: 36px;
+    cursor: pointer;
+    color: #D8DCE8;
+    transition: color 0.15s, transform 0.1s;
+    line-height: 1;
+    user-select: none;
+  }
+  .star-group label:hover,
+  .star-group label.active { color: #F5B731; }
+  .star-group label:hover { transform: scale(1.12); }
+
+  .star-value-label {
+    font-size: 13px;
+    color: #6B7080;
+    margin-bottom: 1.25rem;
+    min-height: 20px;
+  }
+
+  /* Comments */
+  .comments-section { }
+
+  .comments-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #4A4E5E;
+    margin-bottom: 0.75rem;
+  }
+
+  .comment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 0.75rem;
+  }
+
+  .comment-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #F8F9FB;
+    border-radius: 10px;
+    padding: 10px 14px;
+    border: 1px solid #E4E7EF;
+  }
+
+  .comment-item span {
+    flex: 1;
+    font-size: 14px;
+    color: #2D3142;
+    line-height: 1.5;
+    word-break: break-all;
+  }
+
+  .btn-del {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #C0C4D0;
+    font-size: 18px;
+    line-height: 1;
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: color 0.15s;
+    flex-shrink: 0;
+  }
+  .btn-del:hover { color: #E24B4A; }
+
+  .comment-input-row {
+    display: flex;
+    gap: 8px;
+  }
+
+  .comment-input-row input[type="text"] {
+    flex: 1;
+    font-size: 14px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid #D0D4DF;
+    background: #F8F9FB;
+    color: #1A1D23;
+    outline: none;
+    transition: border-color 0.15s;
+    font-family: inherit;
+  }
+  .comment-input-row input[type="text"]:focus {
+    border-color: #2ECC9A;
+    background: #FFFFFF;
+  }
+  .comment-input-row input[type="text"]::placeholder { color: #A8ADBE; }
+
+  .btn-add {
+    background: #1A1D23;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s, transform 0.1s;
+    font-family: inherit;
+  }
+  .btn-add:hover { background: #2ECC9A; color: #0A3D28; }
+  .btn-add:active { transform: scale(0.97); }
+
+  /* Divider */
+  .divider { border: none; border-top: 1px solid #E4E7EF; margin: 1.5rem 0; }
+
+  /* Optional card */
+  .card-optional .card-title { margin-bottom: 0.5rem; }
+  .optional-badge {
+    display: inline-block;
+    font-size: 11px;
+    background: #F2F4F7;
+    color: #6B7080;
+    border: 1px solid #D8DCE8;
+    border-radius: 100px;
+    padding: 2px 10px;
+    margin-bottom: 1.25rem;
+    font-weight: 500;
+  }
+
+  .general-opinion textarea {
+    width: 100%;
+    min-height: 110px;
+    resize: vertical;
+    font-size: 14px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid #D0D4DF;
+    background: #F8F9FB;
+    color: #1A1D23;
+    outline: none;
+    line-height: 1.6;
+    font-family: inherit;
+    transition: border-color 0.15s;
+  }
+  .general-opinion textarea:focus {
+    border-color: #2ECC9A;
+    background: #FFFFFF;
+  }
+  .general-opinion textarea::placeholder { color: #A8ADBE; }
+
+  /* Submit */
+  .submit-wrap { text-align: center; padding-top: 0.5rem; }
+
+  .btn-submit {
+    background: #1A1D23;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 12px;
+    padding: 16px 56px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    font-family: inherit;
+    width: 100%;
+    max-width: 360px;
+  }
+  .btn-submit:hover { background: #2ECC9A; color: #0A3D28; }
+  .btn-submit:active { transform: scale(0.98); }
+
+  /* Toast */
+  .toast {
+    display: none;
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1A1D23;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 12px 24px;
+    border-radius: 100px;
+    z-index: 999;
+    white-space: nowrap;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  }
+  .toast.show { display: block; animation: fadeUp 0.25s ease; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateX(-50%) translateY(8px); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
+
+  /* Success screen */
+  .success-screen {
+    display: none;
+    text-align: center;
+    padding: 4rem 2rem;
+  }
+  .success-screen.show { display: block; }
+  .success-icon {
+    width: 64px; height: 64px;
+    background: #D4F5E9;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 30px;
+  }
+  .success-screen h2 { font-size: 22px; font-weight: 700; margin-bottom: 0.75rem; }
+  .success-screen p { font-size: 15px; color: #6B7080; line-height: 1.7; }
+
+  @media (max-width: 480px) {
+    .hero { padding: 2rem 1.5rem 1.75rem; }
+    .hero h1 { font-size: 20px; }
+    .card { padding: 1.5rem; }
+    .star-group label { font-size: 30px; }
+    .btn-submit { padding: 14px 40px; font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-badge">설문조사</div>
+    <h1>AI 안전보건교육<br>효과성 설문</h1>
+    <p>교육에 참여해 주셔서 감사합니다.<br>
+    솔직한 의견은 더 나은 교육을 만드는 데 큰 도움이 됩니다.</p>
+  </div>
+
+  <!-- Form -->
+  <div id="survey-form">
+
+    <!-- 1. 강의내용 -->
+    <div class="card" id="card-1">
+      <div class="section-label">평가 01</div>
+      <div class="card-title">강의내용</div>
+      <div class="star-group" data-field="content">
+        <label data-val="1" title="1점">★</label>
+        <label data-val="2" title="2점">★</label>
+        <label data-val="3" title="3점">★</label>
+        <label data-val="4" title="4점">★</label>
+        <label data-val="5" title="5점">★</label>
+      </div>
+      <div class="star-value-label" id="label-content">별점을 선택해주세요</div>
+      <hr class="divider">
+      <div class="comments-section">
+        <div class="comments-label">의견 (여러 개 추가 가능)</div>
+        <div class="comment-list" id="comments-content"></div>
+        <div class="comment-input-row">
+          <input type="text" placeholder="의견을 입력하고 추가 버튼을 눌러주세요" id="input-content" maxlength="200">
+          <button class="btn-add" onclick="addComment('content')">+ 추가</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. 이해도 -->
+    <div class="card" id="card-2">
+      <div class="section-label">평가 02</div>
+      <div class="card-title">이해도</div>
+      <div class="star-group" data-field="understanding">
+        <label data-val="1">★</label>
+        <label data-val="2">★</label>
+        <label data-val="3">★</label>
+        <label data-val="4">★</label>
+        <label data-val="5">★</label>
+      </div>
+      <div class="star-value-label" id="label-understanding">별점을 선택해주세요</div>
+      <hr class="divider">
+      <div class="comments-section">
+        <div class="comments-label">의견 (여러 개 추가 가능)</div>
+        <div class="comment-list" id="comments-understanding"></div>
+        <div class="comment-input-row">
+          <input type="text" placeholder="의견을 입력하고 추가 버튼을 눌러주세요" id="input-understanding" maxlength="200">
+          <button class="btn-add" onclick="addComment('understanding')">+ 추가</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. 현업적용도 -->
+    <div class="card" id="card-3">
+      <div class="section-label">평가 03</div>
+      <div class="card-title">현업적용도</div>
+      <div class="star-group" data-field="applicability">
+        <label data-val="1">★</label>
+        <label data-val="2">★</label>
+        <label data-val="3">★</label>
+        <label data-val="4">★</label>
+        <label data-val="5">★</label>
+      </div>
+      <div class="star-value-label" id="label-applicability">별점을 선택해주세요</div>
+      <hr class="divider">
+      <div class="comments-section">
+        <div class="comments-label">의견 (여러 개 추가 가능)</div>
+        <div class="comment-list" id="comments-applicability"></div>
+        <div class="comment-input-row">
+          <input type="text" placeholder="의견을 입력하고 추가 버튼을 눌러주세요" id="input-applicability" maxlength="200">
+          <button class="btn-add" onclick="addComment('applicability')">+ 추가</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. 강의전달력 -->
+    <div class="card" id="card-4">
+      <div class="section-label">평가 04</div>
+      <div class="card-title">강의전달력</div>
+      <div class="star-group" data-field="delivery">
+        <label data-val="1">★</label>
+        <label data-val="2">★</label>
+        <label data-val="3">★</label>
+        <label data-val="4">★</label>
+        <label data-val="5">★</label>
+      </div>
+      <div class="star-value-label" id="label-delivery">별점을 선택해주세요</div>
+      <hr class="divider">
+      <div class="comments-section">
+        <div class="comments-label">의견 (여러 개 추가 가능)</div>
+        <div class="comment-list" id="comments-delivery"></div>
+        <div class="comment-input-row">
+          <input type="text" placeholder="의견을 입력하고 추가 버튼을 눌러주세요" id="input-delivery" maxlength="200">
+          <button class="btn-add" onclick="addComment('delivery')">+ 추가</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 기타 의견 (선택) -->
+    <div class="card card-optional general-opinion">
+      <div class="section-label">총평</div>
+      <div class="card-title">기타 의견</div>
+      <div class="optional-badge">선택 항목</div>
+      <textarea id="general" placeholder="교육 전반에 대한 자유로운 의견을 남겨주세요."></textarea>
+    </div>
+
+    <!-- Submit -->
+    <div class="submit-wrap">
+      <button class="btn-submit" onclick="submitSurvey()">설문 제출하기</button>
+    </div>
+
+  </div><!-- /survey-form -->
+
+  <!-- Success -->
+  <div class="success-screen" id="success-screen">
+    <div class="success-icon">✓</div>
+    <h2>제출이 완료되었습니다!</h2>
+    <p>소중한 의견 감사합니다.<br>더 나은 교육을 위해 소중히 활용하겠습니다.</p>
+  </div>
+
+</div><!-- /page-wrap -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const ratings = { content: 0, understanding: 0, applicability: 0, delivery: 0 };
+  const comments = { content: [], understanding: [], applicability: [], delivery: [] };
+
+  const starLabels = {
+    1: '⭐ 매우 미흡',
+    2: '⭐⭐ 미흡',
+    3: '⭐⭐⭐ 보통',
+    4: '⭐⭐⭐⭐ 우수',
+    5: '⭐⭐⭐⭐⭐ 매우 우수'
+  };
+
+  document.querySelectorAll('.star-group').forEach(group => {
+    const field = group.dataset.field;
+    const labels = group.querySelectorAll('label');
+
+    labels.forEach(lbl => {
+      lbl.addEventListener('mouseenter', () => {
+        const val = +lbl.dataset.val;
+        labels.forEach(l => l.classList.toggle('active', +l.dataset.val <= val));
+      });
+      lbl.addEventListener('mouseleave', () => {
+        const cur = ratings[field];
+        labels.forEach(l => l.classList.toggle('active', +l.dataset.val <= cur));
+      });
+      lbl.addEventListener('click', () => {
+        const val = +lbl.dataset.val;
+        ratings[field] = val;
+        labels.forEach(l => l.classList.toggle('active', +l.dataset.val <= val));
+        document.getElementById('label-' + field).textContent = starLabels[val];
+      });
+    });
+
+    document.getElementById('input-' + field)?.addEventListener('keydown', e => {
+      if (e.key === 'Enter') addComment(field);
+    });
+  });
+
+  function addComment(field) {
+    const input = document.getElementById('input-' + field);
+    const val = input.value.trim();
+    if (!val) return;
+    comments[field].push(val);
+    renderComments(field);
+    input.value = '';
+    input.focus();
+  }
+
+  function renderComments(field) {
+    const list = document.getElementById('comments-' + field);
+    list.innerHTML = '';
+    comments[field].forEach((c, i) => {
+      const item = document.createElement('div');
+      item.className = 'comment-item';
+      item.innerHTML = `<span>${escHtml(c)}</span><button class="btn-del" onclick="removeComment('${field}',${i})" title="삭제">×</button>`;
+      list.appendChild(item);
+    });
+  }
+
+  function removeComment(field, idx) {
+    comments[field].splice(idx, 1);
+    renderComments(field);
+  }
+
+  function escHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function showToast(msg, duration) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), duration || 2200);
+  }
+
+  function submitSurvey() {
+    const fields = ['content', 'understanding', 'applicability', 'delivery'];
+    const names  = ['강의내용', '이해도', '현업적용도', '강의전달력'];
+    for (let i = 0; i < fields.length; i++) {
+      if (!ratings[fields[i]]) {
+        showToast(`"${names[i]}" 항목의 별점을 선택해주세요`);
+        document.getElementById('card-' + (i+1)).scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+    }
+
+    const payload = {
+      timestamp: new Date().toLocaleString('ko-KR'),
+      rating_content: ratings.content,
+      rating_understanding: ratings.understanding,
+      rating_applicability: ratings.applicability,
+      rating_delivery: ratings.delivery,
+      comments_content: comments.content.join(' / '),
+      comments_understanding: comments.understanding.join(' / '),
+      comments_applicability: comments.applicability.join(' / '),
+      comments_delivery: comments.delivery.join(' / '),
+      general_opinion: document.getElementById('general').value.trim()
+    };
+
+    sendToGoogleSheets(payload);
+  }
+
+  async function sendToGoogleSheets(payload) {
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxzEdyygTyJIGCONTfIwxA2bsZwkElwhw2WfX_k8USN_bBIxb35pquuseLd_WBb9-je/exec';
+
+    if (SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+      console.log('제출 데이터 (테스트 모드):', payload);
+      showSuccess();
+      return;
+    }
+
+    try {
+      const btn = document.querySelector('.btn-submit');
+      btn.textContent = '제출 중...';
+      btn.disabled = true;
+
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      showSuccess();
+    } catch (err) {
+      console.error(err);
+      showToast('제출 중 오류가 발생했습니다. 다시 시도해주세요.', 3000);
+      const btn = document.querySelector('.btn-submit');
+      btn.textContent = '설문 제출하기';
+      btn.disabled = false;
+    }
+  }
+
+  function showSuccess() {
+    document.getElementById('survey-form').style.display = 'none';
+    document.getElementById('success-screen').classList.add('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
